@@ -2,14 +2,14 @@
 
 int main(void)
 {
-	printf("[ read bmp file ]\n");
+	printf("[ read bmp header ]\n");
 
 	uint8_t raw[BYTES]={0};
 	FILE *fp;
 	_bmphead_t bmphead;
 
 	/* open bmp file */
-	fp = bmpopen("images/test.bmp", "rb");
+	fp = bmpopen("../images/test.bmp", "rb");
 
 	/* read raw data */
 	fgetb(raw, BYTES, fp);

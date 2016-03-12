@@ -1,7 +1,7 @@
 CXX	=	gcc
-INC	=	./include
-FLAGS	=	-Wall -O3 -ggdb -I./bmp -I./bytes
-SOURCE	=	main.c bmp/bmp.c bytes/bytes.c
+INC	=	../include
+FLAGS	=	-Wall -O3 -ggdb -I$(INC)
+SOURCE	=	main.c $(INC)/bmp.c $(INC)/bytes.c
 BIN	=	main
 
 all:
