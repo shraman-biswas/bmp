@@ -31,8 +31,11 @@
 #define BMP_NCLR	0x2e
 #define BMP_IMPCLR	0x32
 
-#define PACK2(x) ((*(x+1) << 8) | (*(x)))
-#define PACK4(x) ((*((x))) | (*((x)+1) << 8) | (*((x)+2) << 16) | (*((x)+3) << 32))
+/* pack 2 bytes from little-endian to big-endian */
+#define PACK2(x) ((*(x)) | (*((x)+1) << 8))
+
+/* pack 4 bytes from little-endian to big-endian */
+#define PACK4(x) ((*(x)) | (*((x)+1) << 8) | (*((x)+2) << 16) | (*((x)+3) << 32))
 
 /* bitmap header structure */
 typedef struct __bitmaphead_t {
