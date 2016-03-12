@@ -1,16 +1,23 @@
 #include "main.h"
 
-int main(void)
+int main(int argc, char **argv)
 {
 	printf("[ read bmp header ]\n");
 
+	char *filename, path[80] = "../images/";
 	uint8_t raw[BYTES]={0};
+	size_t len;
 	FILE *fp;
 	_bmphead_t bmphead;
 
-	/* open bmp file */
-	fp = bmpopen("../images/test.bmp", "rb");
+	/* get image filename */
+	filename = (argc > 1) ? argv[1] : "test.bmp";
+	len = strlen(filename);
+	len = (80 - strlen(path) - len) ? len : 80 - strlen(path);
+	strncat(path, filename, len);
 
+	/* open bmp file */
+	fp = bmpopen(path, "rb");
 	/* read raw data */
 	fgetb(raw, BYTES, fp);
 	printf("raw data:\n");
