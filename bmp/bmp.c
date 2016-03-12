@@ -59,7 +59,7 @@ void print_bmphead(const _bmphead_t *bmphead)
 
 void print_bitmaphead(const _bitmaphead_t *bitmaphead)
 {
-	printf("id: %c%c\n", bitmaphead->id[0], bitmaphead->id[1]);
+	printf("id:\t\t%c%c\n", bitmaphead->id[0], bitmaphead->id[1]);
 	printf("file size:\t%d bytes\n", bitmaphead->fsize);
 	printf("file offset:\t%d bytes\n", bitmaphead->offset);
 }

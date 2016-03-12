@@ -13,10 +13,12 @@ int main(void)
 
 	/* read raw data */
 	fgetb(raw, BYTES, fp);
+	printf("raw data:\n");
 	printb(raw, BYTES, PKNG);
 
 	/* parse bmp file header */
 	get_bmphead(raw, BYTES, &bmphead);
+	printf("\nbmp header data:\n");
 	print_bmphead(&bmphead);
 
 	/* close bmp file */
