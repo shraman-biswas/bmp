@@ -1,16 +1,16 @@
 #include "bmp.h"
 
-bool isbmp(const char *filename)
+inline bool isbmp(const char *filename)
 {
 	return strstr(filename+strlen(filename)-4, ".bmp") ? true : false;
 }
 
-FILE *bmpopen(const char *path, const char *mode)
+inline FILE *bmpopen(const char *path, const char *mode)
 {
 	return fopen(path, mode);
 }
 
-void bmpclose(FILE *stream)
+inline void bmpclose(FILE *stream)
 {
 	if (stream)
 		fclose(stream);
@@ -68,7 +68,7 @@ void print_bitmaphead(const _bitmaphead_t *bitmaphead)
 void print_dibhead(const _dibhead_t *dibhead)
 {
 	printf("dib head size:\t%d bytes\n", dibhead->size);
-	if (dibhead->size != 40) /* BITMAPINFOEADER */
+	if (dibhead->size != DIBHEAD_SZ) /* BITMAPINFOEADER */
 		return;
 	printf("image width:\t%d pixels\n", dibhead->width);
 	printf("image height:\t%d pixels\n", dibhead->height);

@@ -53,8 +53,8 @@ typedef struct __bmphead_t {
 } _bmphead_t;
 
 inline bool isbmp(const char *filename);
-FILE *bmpopen(const char *path, const char *mode);
-void bmpclose(FILE *stream);
+inline FILE *bmpopen(const char *path, const char *mode);
+inline void bmpclose(FILE *stream);
 void get_bmphead(uint8_t *b, uint32_t size, _bmphead_t *bmphead);
 void get_bitmaphead(uint8_t *b, uint32_t size, _bitmaphead_t *bitmaphead);
 void get_dibhead(uint8_t *b, uint32_t size, _dibhead_t *dibhead);
