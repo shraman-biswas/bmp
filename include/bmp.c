@@ -1,38 +1,44 @@
 #include "bmp.h"
 
+/* check if filename is a bmp file */
 inline bool isbmp(const char *filename)
 {
 	return strstr(filename+strlen(filename)-4, ".bmp") ? true : false;
 }
 
+/* open bmp file */
 inline FILE *bmpopen(const char *path, const char *mode)
 {
 	return fopen(path, mode);
 }
 
+/* close bmp file */
 inline void bmpclose(FILE *stream)
 {
 	if (stream)
 		fclose(stream);
 }
 
+/* get bmp file header data */
 void get_bmphead(uint8_t *b, uint32_t size, _bmphead_t *bmphead)
 {
-	if ((size < BITMAPHEAD_SZ) || (!bmphead)) /* min 14 bytes required */
+	if ((size < BITMAPHEAD_SZ) || (!bmphead))        /* BITMAPINFOHEADER */
 		 return;
-	get_bitmaphead(b, size, &(bmphead->bitmaphead)); /* bitmap file header */
-	get_dibhead(b, size, &(bmphead->dibhead)); /* DIB header */
+	get_bitmaphead(b, size, &(bmphead->bitmaphead)); /* bitmap header */
+	get_dibhead(b, size, &(bmphead->dibhead));       /* DIB header */
 
 }
 
+/* get bmp file bitmap header data */
 void get_bitmaphead(uint8_t *b, uint32_t size, _bitmaphead_t *bitmaphead)
 {
 	bitmaphead->id[0] = *(b + BMP_ID0);
 	bitmaphead->id[1] = *(b + BMP_ID1);
 	bitmaphead->fsize = PACK4(b + BMP_FSIZE);
-	bitmaphead->offset = PACK4(b + BMP_OFFSET);	
+	bitmaphead->offset = PACK4(b + BMP_OFFSET);
 }
 
+/* get bmp file DIB header data  */
 void get_dibhead(uint8_t *b, uint32_t size, _dibhead_t *dibhead)
 {
 	dibhead->size = PACK4(b + BMP_SIZE);
@@ -50,14 +56,16 @@ void get_dibhead(uint8_t *b, uint32_t size, _dibhead_t *dibhead)
 	dibhead->impclr = PACK4(b + BMP_IMPCLR);
 }
 
+/* print bmp file header data */
 void print_bmphead(const _bmphead_t *bmphead)
 {
 	if (!bmphead)
 		return;
-	print_bitmaphead(&(bmphead->bitmaphead)); /* bitmap file header */
-	print_dibhead(&(bmphead->dibhead)); /* DIB header */
+	print_bitmaphead(&(bmphead->bitmaphead)); /* bitmap header */
+	print_dibhead(&(bmphead->dibhead));       /* DIB header */
 }
 
+/* print bmp file bitmap header data */
 void print_bitmaphead(const _bitmaphead_t *bitmaphead)
 {
 	printf("id:\t\t%c%c\n", bitmaphead->id[0], bitmaphead->id[1]);
@@ -65,6 +73,7 @@ void print_bitmaphead(const _bitmaphead_t *bitmaphead)
 	printf("file offset:\t%d bytes\n", bitmaphead->offset);
 }
 
+/* print bmp file DIB header data */
 void print_dibhead(const _dibhead_t *dibhead)
 {
 	printf("dib head size:\t%d bytes\n", dibhead->size);
