@@ -2,23 +2,18 @@
 
 bool isbmp(const char *filename)
 {
-	return strcasestr(filename+strlen(filename)-4, ".bmp") ? true : false;
+	return strstr(filename+strlen(filename)-4, ".bmp") ? true : false;
 }
-
 
 FILE *bmpopen(const char *path, const char *mode)
 {
 	return fopen(path, mode);
 }
 
-int bmpclose(FILE *stream)
+void bmpclose(FILE *stream)
 {
-	if (stream) {
+	if (stream)
 		fclose(stream);
-		return 0;
-	} else {
-		return -1;
-	}
 }
 
 void get_bmphead(uint8_t *b, uint32_t size, _bmphead_t *bmphead)
