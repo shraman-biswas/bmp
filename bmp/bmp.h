@@ -26,16 +26,19 @@
 #define PACK2(x) ((*(x+1) << 8) | (*(x)))
 #define PACK4(x) ((*((x))) | (*((x)+1) << 8) | (*((x)+2) << 16) | (*((x)+3) << 32))
 
+/* bitmap header structure */
 typedef struct __bitmaphead_t {
 	uint32_t fsize, offset;
 	uint8_t id[2];
 } _bitmaphead_t;
 
+/* DIB header structure */
 typedef struct __dibhead_t {
 	uint32_t size, width, height, comp, isize, xres, yres, nclr, impclr;
 	uint16_t clrpl, bpp;
 } _dibhead_t;
 
+/* bmp file header structure */
 typedef struct __bmphead_t {
 	_bitmaphead_t bitmaphead;
 	_dibhead_t dibhead;
