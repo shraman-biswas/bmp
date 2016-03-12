@@ -1,8 +1,10 @@
 #ifndef BMP_H
 #define BMP_H
 
+#include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <string.h>
 
 /* bitmap header size */
 #define BITMAPHEAD_SZ	14
@@ -50,6 +52,7 @@ typedef struct __bmphead_t {
 	_dibhead_t dibhead;
 } _bmphead_t;
 
+bool isbmp(const char *filename);
 FILE *bmpopen(const char *path, const char *mode);
 int bmpclose(FILE *stream);
 void get_bmphead(uint8_t *b, uint32_t size, _bmphead_t *bmphead);

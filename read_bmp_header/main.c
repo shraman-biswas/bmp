@@ -12,6 +12,12 @@ int main(int argc, char **argv)
 
 	/* get image filename */
 	filename = (argc > 1) ? argv[1] : "test.bmp";
+	if (!isbmp(filename)) {
+		fprintf("not a bmp file!\ns");
+		exit(EXIT_FAILURE);
+	}
+
+	/* create path name from filename */
 	len = strlen(filename);
 	len = (80 - strlen(path) - len) ? len : 80 - strlen(path);
 	strncat(path, filename, len);

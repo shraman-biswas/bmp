@@ -1,5 +1,11 @@
 #include "bmp.h"
 
+bool isbmp(const char *filename)
+{
+	return strcasestr(filename+strlen(filename)-4, ".bmp") ? true : false;
+}
+
+
 FILE *bmpopen(const char *path, const char *mode)
 {
 	return fopen(path, mode);
