@@ -1,5 +1,5 @@
 CXX	=	gcc
-INC	=	../include
+INC	=	../../include
 FLAGS	=	-Wall -O3 -ggdb -I$(INC)
 SOURCE	=	main.c $(INC)/bmp.c $(INC)/bytes.c
 BIN	=	main

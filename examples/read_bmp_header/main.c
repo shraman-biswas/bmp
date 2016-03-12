@@ -4,7 +4,7 @@ int main(int argc, char **argv)
 {
 	printf("[ read bmp header ]\n");
 
-	char *filename, path[PATH_LEN] = "../images/";
+	char *filename, path[PATH_LEN] = "../../images/";
 	uint8_t raw[BYTES]={0};
 	size_t len;
 	FILE *fp;
