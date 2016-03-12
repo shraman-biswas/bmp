@@ -1,4 +1,4 @@
 BMP
 ===
 
-A bitmap image file (BMP) handling library.
+A bitmap image file (bmp) handling library.
