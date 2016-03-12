@@ -26,27 +26,27 @@ void get_bmphead(uint8_t *b, uint32_t size, _bmphead_t *bmphead)
 
 void get_bitmaphead(uint8_t *b, uint32_t size, _bitmaphead_t *bitmaphead)
 {
-	bitmaphead->id[0] = *(b + 0x0);
-	bitmaphead->id[1] = *(b + 0x1);
-	bitmaphead->fsize = PACK4(b + 0x2);
-	bitmaphead->offset = PACK4(b + 0xa);	
+	bitmaphead->id[0] = *(b + BMP_ID0);
+	bitmaphead->id[1] = *(b + BMP_ID1);
+	bitmaphead->fsize = PACK4(b + BMP_FSIZE);
+	bitmaphead->offset = PACK4(b + BMP_OFFSET);	
 }
 
 void get_dibhead(uint8_t *b, uint32_t size, _dibhead_t *dibhead)
 {
-	dibhead->size = PACK4(b + 0xe);
+	dibhead->size = PACK4(b + BMP_SIZE);
 	if ((dibhead->size != 40) && (size < (14 + 40))) /* BITMAPINFOEADER */
 		return;
-	dibhead->width = PACK4(b + 0x12);
-	dibhead->height = PACK4(b + 0x16);
-	dibhead->clrpl = PACK2(b + 0x1a);
-	dibhead->bpp = PACK2(b + 0x1c);
-	dibhead->comp = PACK4(b + 0x1e);
-	dibhead->isize = PACK4(b + 0x22);
-	dibhead->xres = PACK4(b + 0x26);
-	dibhead->yres = PACK4(b + 0x2a);
-	dibhead->nclr = PACK4(b + 0x2e);
-	dibhead->impclr = PACK4(b + 0x32);
+	dibhead->width = PACK4(b + BMP_WIDTH);
+	dibhead->height = PACK4(b + BMP_HEIGHT);
+	dibhead->clrpl = PACK2(b + BMP_CLRPL);
+	dibhead->bpp = PACK2(b + BMP_BPP);
+	dibhead->comp = PACK4(b + BMP_COMP);
+	dibhead->isize = PACK4(b + BMP_ISIZE);
+	dibhead->xres = PACK4(b + BMP_XRES);
+	dibhead->yres = PACK4(b + BMP_YRES);
+	dibhead->nclr = PACK4(b + BMP_NCLR);
+	dibhead->impclr = PACK4(b + BMP_IMPCLR);
 }
 
 void print_bmphead(const _bmphead_t *bmphead)
