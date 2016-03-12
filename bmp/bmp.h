@@ -4,6 +4,12 @@
 #include <stdint.h>
 #include <stdio.h>
 
+/* bitmap header size */
+#define BITMAPHEAD_SZ	14
+
+/* DIB header size */
+#define DIBHEAD_SZ		40
+
 /* bitmap header offsets */
 #define BMP_ID0		0x0
 #define BMP_ID1		0x1

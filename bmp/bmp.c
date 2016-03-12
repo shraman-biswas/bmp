@@ -17,7 +17,7 @@ int bmpclose(FILE *stream)
 
 void get_bmphead(uint8_t *b, uint32_t size, _bmphead_t *bmphead)
 {
-	if ((size < 14) || (!bmphead)) /* min 14 bytes required */
+	if ((size < BITMAPHEAD_SZ) || (!bmphead)) /* min 14 bytes required */
 		 return;
 	get_bitmaphead(b, size, &(bmphead->bitmaphead)); /* bitmap file header */
 	get_dibhead(b, size, &(bmphead->dibhead)); /* DIB header */
@@ -35,7 +35,7 @@ void get_bitmaphead(uint8_t *b, uint32_t size, _bitmaphead_t *bitmaphead)
 void get_dibhead(uint8_t *b, uint32_t size, _dibhead_t *dibhead)
 {
 	dibhead->size = PACK4(b + BMP_SIZE);
-	if ((dibhead->size != 40) && (size < (14 + 40))) /* BITMAPINFOEADER */
+	if ((dibhead->size != DIBHEAD_SZ) && (size < (BITMAPHEAD_SZ + DIBHEAD_SZ))) /* BITMAPINFOEADER */
 		return;
 	dibhead->width = PACK4(b + BMP_WIDTH);
 	dibhead->height = PACK4(b + BMP_HEIGHT);
