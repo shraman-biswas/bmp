@@ -25,12 +25,12 @@ int main(int argc, char **argv)
 	}
 	strncat(path, filename, len);
 
-	fp = bmpopen(path, "rb"); /* open bmp file */
-	fread(raw, 1, BYTES, fp); /* read raw data */
-	get_bmphead(raw, BYTES, &bmphead); /* parse bmp file header */
-	get_bmpdata(&bmphead, data, fp); /* read bmp data */
-	print_bmpdata(&bmphead, data, PKNG); /* print bmp data */
-	bmpclose(fp); /* close bmp file */
+	fp = bmpopen(path, "rb");				/* open bmp file */
+	fread(raw, 1, BYTES, fp);				/* read raw data */
+	get_bmphead(raw, BYTES, &bmphead);		/* parse bmp file header */
+	get_bmpdata(&bmphead, data, fp);		/* read bmp data */
+	print_bmpdata(&bmphead, data, PKNG);	/* print bmp data */
+	bmpclose(fp);							/* close bmp file */
 
 	return EXIT_SUCCESS;
 }
