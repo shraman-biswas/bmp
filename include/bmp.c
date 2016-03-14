@@ -50,7 +50,7 @@ void get_bitmaphead(uint8_t *b, uint32_t size, bitmaphead_t *bitmaphead)
 void get_dibhead(uint8_t *b, uint32_t size, dibhead_t *dibhead)
 {
 	dibhead->size = PACK4(b + BMP_SIZE);
-	if ((dibhead->size != DIBHEAD_SZ) &&
+	if ((dibhead->size != DIBHEAD_SIZE) &&
 		(size < (BITMAPHEAD_SIZE + DIBHEAD_SIZE))) /* BITMAPINFOEADER */
 		return;
 	dibhead->width = PACK4(b + BMP_WIDTH);
@@ -86,7 +86,7 @@ void print_bitmaphead(const bitmaphead_t *bitmaphead)
 void print_dibhead(const dibhead_t *dibhead)
 {
 	printf("dib head size:\t%d bytes\n", dibhead->size);
-	if (dibhead->size != DIBHEAD_SZ) /* BITMAPINFOEADER */
+	if (dibhead->size != DIBHEAD_SIZE) /* BITMAPINFOEADER */
 		return;
 	printf("image width:\t%d pixels\n", dibhead->width);
 	printf("image height:\t%d pixels\n", dibhead->height);
