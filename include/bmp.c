@@ -3,7 +3,7 @@
 /* check if bmp file */
 inline int isbmp(bmphead_t *bmphead)
 {
-	return ((!bmphead) &&
+	return ((bmphead != NULL) &&
 		(bmphead->bitmaphead.id[0] == 'B') &&
 		(bmphead->bitmaphead.id[1] == 'M'));
 }
@@ -23,7 +23,7 @@ inline FILE *bmpopen(const char *path, const char *mode)
 /* close bmp file */
 inline void bmpclose(FILE *stream)
 {
-	if (stream)
+	if (stream != NULL)
 		fclose(stream);
 }
 
