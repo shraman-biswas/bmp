@@ -1,6 +1,6 @@
 #include "bmp.h"
 
-/* check if a bmp file */
+/* check if bmp file */
 inline int isbmp(bmphead_t *bmphead)
 {
 	return ((!bmphead) &&
@@ -8,7 +8,7 @@ inline int isbmp(bmphead_t *bmphead)
 		(bmphead->bitmaphead.id[1] == 'M'));
 }
 
-/* check if filename is a bmp file */
+/* check if filename has .bmp file extension */
 inline int isbmpext(const char *filename)
 {
 	return strstr(filename+strlen(filename)-4, ".bmp") ? 1 : 0;
