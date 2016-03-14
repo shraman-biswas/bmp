@@ -5,7 +5,7 @@ int main(int argc, char **argv)
 	printf("[ read bmp data ]\n");
 
 	char *filename, path[PATH_LEN] = "../../images/";
-	uint8_t data[480*640*3], raw[BYTES]={0};
+	uint8_t data[480*640*3], raw[BYTES];
 	size_t len;
 	FILE *fp=NULL;
 	bmphead_t bmphead;
