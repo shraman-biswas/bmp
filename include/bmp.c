@@ -93,24 +93,26 @@ void print_dibhead(const dibhead_t *dibhead)
 
 void get_bmpdata(const bmphead_t *bmphead, uint8_t *data, FILE *stream)
 {
-	if (bmphead->dibhead.size != DIBHEAD_SZ) // BITMAPINFOEADER
+	if (bmphead->dibhead.size != DIBHEAD_SZ) /* BITMAPINFOEADER */
 		return;
 	uint32_t dsize, cols;
 	dsize = bmphead->dibhead.bpp * bmphead->dibhead.width / 8;
 	cols = bmphead->dibhead.height;
 	fseek(stream, bmphead->bitmaphead.offset, SEEK_SET);
+	data += dsize * (cols - 1);
 	while ((fread(data, 1, dsize, stream) != EOF) && (cols--))
-		data += dsize;
+		data -= dsize;
 }
 
 void print_bmpdata(const bmphead_t *bmphead, uint8_t *data, int pkng)
 {
-	if (bmphead->dibhead.size != DIBHEAD_SZ) // BITMAPINFOEADER
+	if (bmphead->dibhead.size != DIBHEAD_SZ) /* BITMAPINFOEADER */
 		return;
 	uint32_t dsize, cols;
 	dsize = bmphead->dibhead.bpp * bmphead->dibhead.width / 8;
 	cols = bmphead->dibhead.height;
-	pkng = (pkng > 0) ? pkng : bmphead->dibhead.width;
+	if (pkng <= 0)
+		bmphead->dibhead.width;
 	while (cols--) {
 		printb(data, dsize, pkng);
 		data += dsize;
