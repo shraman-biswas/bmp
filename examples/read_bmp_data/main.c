@@ -7,13 +7,13 @@ int main(int argc, char **argv)
 	char *filename, path[PATH_LEN] = "../../images/";
 	uint8_t data[480*640*3], raw[BYTES]={0};
 	size_t len;
-	FILE *fp;
+	FILE *fp=NULL;
 	bmphead_t bmphead;
 
 	/* get image filename */
 	filename = (argc > 1) ? argv[1] : "test.bmp";
 	if (!isbmpext(filename)) {
-		fprintf(stderr, "not a bmp file!\n");
+		fprintf(stderr, "not a .bmp file!\n");
 		exit(EXIT_FAILURE);
 	}
 
@@ -28,7 +28,7 @@ int main(int argc, char **argv)
 	/* open bmp file */
 	fp = bmpopen(path, "rb");
 
-	/* read raw data */
+	/* read raw header data */
 	if (fread(raw, 1, BYTES, fp) == EOF) {
 		fprintf(stderr, "bmp file header bytes not be read!\n");
 		exit(EXIT_FAILURE);
@@ -36,6 +36,12 @@ int main(int argc, char **argv)
 
 	/* parse bmp file header */
 	get_bmphead(raw, BYTES, &bmphead);
+
+	/* check if bmp file in bmp header */
+	if (!isbmp(&bmphead)) {
+		fprintf(stderr, "not a bmp file!\n");
+		exit(EXIT_FAILURE);
+	}
 
 	/* read bmp data */
 	get_bmpdata(&bmphead, data, fp);
