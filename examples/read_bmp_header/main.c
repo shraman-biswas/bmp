@@ -8,7 +8,7 @@ int main(int argc, char **argv)
 	uint8_t raw[BYTES]={0};
 	size_t len;
 	FILE *fp;
-	_bmphead_t bmphead;
+	bmphead_t bmphead;
 
 	/* get image filename */
 	filename = (argc > 1) ? argv[1] : "test.bmp";
