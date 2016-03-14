@@ -1,5 +1,13 @@
 #include "bmp.h"
 
+/* check if a bmp file */
+inline int isbmp(bmphead_t *bmphead)
+{
+	return ((!bmphead) &&
+		(bmphead->bitmaphead.id[0] == 'B') &&
+		(bmphead->bitmaphead.id[1] == 'M'));
+}
+
 /* check if filename is a bmp file */
 inline int isbmpext(const char *filename)
 {
@@ -22,7 +30,7 @@ inline void bmpclose(FILE *stream)
 /* get bmp file header data */
 void get_bmphead(uint8_t *b, uint32_t size, bmphead_t *bmphead)
 {
-	if ((size < BITMAPHEAD_SZ) || (!bmphead))        /* BITMAPINFOHEADER */
+	if ((size < BITMAPHEAD_SIZE) || (!bmphead))      /* BITMAPINFOHEADER */
 		 return;
 	get_bitmaphead(b, size, &(bmphead->bitmaphead)); /* bitmap header */
 	get_dibhead(b, size, &(bmphead->dibhead));       /* DIB header */
@@ -42,7 +50,8 @@ void get_bitmaphead(uint8_t *b, uint32_t size, bitmaphead_t *bitmaphead)
 void get_dibhead(uint8_t *b, uint32_t size, dibhead_t *dibhead)
 {
 	dibhead->size = PACK4(b + BMP_SIZE);
-	if ((dibhead->size != DIBHEAD_SZ) && (size < (BITMAPHEAD_SZ + DIBHEAD_SZ))) /* BITMAPINFOEADER */
+	if ((dibhead->size != DIBHEAD_SZ) &&
+		(size < (BITMAPHEAD_SIZE + DIBHEAD_SIZE))) /* BITMAPINFOEADER */
 		return;
 	dibhead->width = PACK4(b + BMP_WIDTH);
 	dibhead->height = PACK4(b + BMP_HEIGHT);
@@ -93,7 +102,7 @@ void print_dibhead(const dibhead_t *dibhead)
 
 void get_bmpdata(const bmphead_t *bmphead, uint8_t *data, FILE *stream)
 {
-	if (bmphead->dibhead.size != DIBHEAD_SZ) /* BITMAPINFOEADER */
+	if (bmphead->dibhead.size != DIBHEAD_SIZE) /* BITMAPINFOEADER */
 		return;
 	uint32_t dsize, cols;
 	dsize = bmphead->dibhead.bpp * bmphead->dibhead.width / 8;
@@ -106,7 +115,7 @@ void get_bmpdata(const bmphead_t *bmphead, uint8_t *data, FILE *stream)
 
 void print_bmpdata(const bmphead_t *bmphead, uint8_t *data, int pkng)
 {
-	if (bmphead->dibhead.size != DIBHEAD_SZ) /* BITMAPINFOEADER */
+	if (bmphead->dibhead.size != DIBHEAD_SIZE) /* BITMAPINFOEADER */
 		return;
 	uint32_t dsize, cols;
 	dsize = bmphead->dibhead.bpp * bmphead->dibhead.width / 8;

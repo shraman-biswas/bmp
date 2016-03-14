@@ -8,10 +8,10 @@
 #include "bytes.h"
 
 /* bitmap header size */
-#define BITMAPHEAD_SZ	14
+#define BITMAPHEAD_SIZE	14
 
 /* DIB header size */
-#define DIBHEAD_SZ	40
+#define DIBHEAD_SIZE	40
 
 /* bitmap header offsets */
 #define BMP_ID0		0x0
@@ -36,7 +36,8 @@
 #define PACK2(x) ((*(x)) | (*((x)+1) << 8))
 
 /* pack 4 bytes from little-endian to big-endian */
-#define PACK4(x) ((*(x)) | (*((x)+1) << 8) | (*((x)+2) << 16) | (*((x)+3) << 32))
+#define PACK4(x) \
+	((*(x)) | (*((x)+1) << 8) | (*((x)+2) << 16) | (*((x)+3) << 32))
 
 /* bitmap header structure */
 typedef struct __bitmaphead_t {
@@ -56,6 +57,7 @@ typedef struct __bmphead_t {
 	dibhead_t dibhead;
 } bmphead_t;
 
+inline int isbmp(bmphead_t *bmphead);
 inline int isbmpext(const char *filename);
 inline FILE *bmpopen(const char *path, const char *mode);
 inline void bmpclose(FILE *stream);
