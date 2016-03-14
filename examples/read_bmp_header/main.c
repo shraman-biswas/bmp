@@ -29,7 +29,10 @@ int main(int argc, char **argv)
 	fp = bmpopen(path, "rb");
 
 	/* read raw data */
-	fread(raw, 1, BYTES, fp);
+	if (fread(raw, 1, BYTES, fp) == EOF) {
+		fprintf(stderr, "bmp file header bytes not be read!\n");
+		exit(EXIT_FAILURE);
+	}
 	printf("raw data:\n");
 	printb(raw, BYTES, PKNG);
 
