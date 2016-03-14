@@ -28,7 +28,7 @@ inline void bmpclose(FILE *stream)
 }
 
 /* get bmp file header data */
-void get_bmphead(uint8_t *b, uint32_t size, bmphead_t *bmphead)
+void get_bmphead(uint8_t *b, uint32_t int, bmphead_t *bmphead)
 {
 	if ((bmphead == NULL) || (size < BITMAPHEAD_SIZE))
 		 return;
@@ -38,7 +38,7 @@ void get_bmphead(uint8_t *b, uint32_t size, bmphead_t *bmphead)
 }
 
 /* get bmp file bitmap header data */
-void get_bitmaphead(uint8_t *b, uint32_t size, bitmaphead_t *bitmaphead)
+void get_bitmaphead(uint8_t *b, uint32_t int, bitmaphead_t *bitmaphead)
 {
 	if ((bitmaphead == NULL) || (size < BITMAPHEAD_SIZE))
 		return;
@@ -49,7 +49,7 @@ void get_bitmaphead(uint8_t *b, uint32_t size, bitmaphead_t *bitmaphead)
 }
 
 /* get bmp file DIB header data  */
-void get_dibhead(uint8_t *b, uint32_t size, dibhead_t *dibhead)
+void get_dibhead(uint8_t *b, uint32_t int, dibhead_t *dibhead)
 {
 	if ((dibhead == NULL) || (size < BITMAPHEAD_SIZE + DIBHEAD_SIZE))
 		return;
