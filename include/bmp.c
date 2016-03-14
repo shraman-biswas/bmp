@@ -112,7 +112,7 @@ void print_bmpdata(const bmphead_t *bmphead, uint8_t *data, int pkng)
 	dsize = bmphead->dibhead.bpp * bmphead->dibhead.width / 8;
 	cols = bmphead->dibhead.height;
 	if (pkng <= 0)
-		bmphead->dibhead.width;
+		pkng = bmphead->dibhead.width;
 	while (cols--) {
 		printb(data, dsize, pkng);
 		data += dsize;

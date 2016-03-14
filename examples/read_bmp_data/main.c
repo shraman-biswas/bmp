@@ -5,7 +5,7 @@ int main(int argc, char **argv)
 	printf("[ read bmp data ]\n");
 
 	char *filename, path[PATH_LEN] = "../../images/";
-	uint8_t raw[BYTES]={0}, data[480][3*640];
+	uint8_t data[480*640*3], raw[BYTES]={0};
 	size_t len;
 	FILE *fp;
 	bmphead_t bmphead;
@@ -25,8 +25,12 @@ int main(int argc, char **argv)
 	}
 	strncat(path, filename, len);
 
+	/* bmp file handling */
 	fp = bmpopen(path, "rb");				/* open bmp file */
-	fread(raw, 1, BYTES, fp);				/* read raw data */
+	if (fread(raw, 1, BYTES, fp) == EOF) {	/* read raw data */
+		fprintf(stderr, "bmp file header bytes not be read!\n");
+		exit(EXIT_FAILURE);
+	}
 	get_bmphead(raw, BYTES, &bmphead);		/* parse bmp file header */
 	get_bmpdata(&bmphead, data, fp);		/* read bmp data */
 	print_bmpdata(&bmphead, data, PKNG);	/* print bmp data */
