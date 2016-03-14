@@ -13,7 +13,7 @@ int main(int argc, char **argv)
 	/* get image filename */
 	filename = (argc > 1) ? argv[1] : "test.bmp";
 	if (!isbmpext(filename)) {
-		fprintf(stderr, "not a bmp file!\n");
+		fprintf(stderr, "not a .bmp file!\n");
 		exit(EXIT_FAILURE);
 	}
 
