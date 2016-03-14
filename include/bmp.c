@@ -30,16 +30,18 @@ inline void bmpclose(FILE *stream)
 /* get bmp file header data */
 void get_bmphead(uint8_t *b, uint32_t size, bmphead_t *bmphead)
 {
-	if ((size < BITMAPHEAD_SIZE) || (!bmphead))      /* BITMAPINFOHEADER */
+	if ((bmphead == NULL) || (size < BITMAPHEAD_SIZE))
 		 return;
-	get_bitmaphead(b, size, &(bmphead->bitmaphead)); /* bitmap header */
-	get_dibhead(b, size, &(bmphead->dibhead));       /* DIB header */
+	get_bitmaphead(b, size, &(bmphead->bitmaphead));  /* bitmap header */
+	get_dibhead(b, size, &(bmphead->dibhead));        /* DIB header */
 
 }
 
 /* get bmp file bitmap header data */
 void get_bitmaphead(uint8_t *b, uint32_t size, bitmaphead_t *bitmaphead)
 {
+	if ((bitmaphead == NULL) || (size < BITMAPHEAD_SIZE))
+		return;
 	bitmaphead->id[0] = *(b + BMP_ID0);
 	bitmaphead->id[1] = *(b + BMP_ID1);
 	bitmaphead->fsize = PACK4(b + BMP_FSIZE);
@@ -49,9 +51,9 @@ void get_bitmaphead(uint8_t *b, uint32_t size, bitmaphead_t *bitmaphead)
 /* get bmp file DIB header data  */
 void get_dibhead(uint8_t *b, uint32_t size, dibhead_t *dibhead)
 {
-	dibhead->size = PACK4(b + BMP_SIZE);
-	if ((dibhead->size != DIBHEAD_SIZE) &&
-		(size < (BITMAPHEAD_SIZE + DIBHEAD_SIZE))) /* BITMAPINFOEADER */
+	if ((dibhead == NULL) || (size < BITMAPHEAD_SIZE + DIBHEAD_SIZE))
+		return;
+	if ((dibhead->size = PACK4(b + BMP_SIZE)) != DIBHEAD_SIZE)
 		return;
 	dibhead->width = PACK4(b + BMP_WIDTH);
 	dibhead->height = PACK4(b + BMP_HEIGHT);
@@ -68,7 +70,7 @@ void get_dibhead(uint8_t *b, uint32_t size, dibhead_t *dibhead)
 /* print bmp file header data */
 void print_bmphead(const bmphead_t *bmphead)
 {
-	if (!bmphead)
+	if (bmphead == NULL)
 		return;
 	print_bitmaphead(&(bmphead->bitmaphead)); /* bitmap header */
 	print_dibhead(&(bmphead->dibhead));       /* DIB header */
@@ -77,6 +79,8 @@ void print_bmphead(const bmphead_t *bmphead)
 /* print bmp file bitmap header data */
 void print_bitmaphead(const bitmaphead_t *bitmaphead)
 {
+	if (bitmaphead == NULL)
+		return;
 	printf("id:\t\t%c%c\n", bitmaphead->id[0], bitmaphead->id[1]);
 	printf("file size:\t%d bytes\n", bitmaphead->fsize);
 	printf("file offset:\t%d bytes\n", bitmaphead->offset);
@@ -85,9 +89,9 @@ void print_bitmaphead(const bitmaphead_t *bitmaphead)
 /* print bmp file DIB header data */
 void print_dibhead(const dibhead_t *dibhead)
 {
-	printf("dib head size:\t%d bytes\n", dibhead->size);
-	if (dibhead->size != DIBHEAD_SIZE) /* BITMAPINFOEADER */
+	if ((dibhead == NULL) || (dibhead->size != DIBHEAD_SIZE))
 		return;
+	printf("dib head size:\t%d bytes\n", dibhead->size);
 	printf("image width:\t%d pixels\n", dibhead->width);
 	printf("image height:\t%d pixels\n", dibhead->height);
 	printf("colour planes:\t%d\n", dibhead->clrpl);
@@ -103,10 +107,10 @@ void print_dibhead(const dibhead_t *dibhead)
 /* get bmp image data */
 void get_bmpdata(const bmphead_t *bmphead, uint8_t *data, FILE *stream)
 {
-	if (bmphead->dibhead.size != DIBHEAD_SIZE) /* BITMAPINFOEADER */
+	if ((bmphead == NULL) || (data == NULL) || (stream == NULL) ||
+		(bmphead->dibhead.size != DIBHEAD_SIZE))
 		return;
-	uint32_t cols, dsize;
-	cols = bmphead->dibhead.height;
+	uint32_t dsize, cols = bmphead->dibhead.height;
 
 	/* calculate row data size in bytes without padding */
 	dsize = bmphead->dibhead.bpp * bmphead->dibhead.width / 8;
@@ -124,10 +128,10 @@ void get_bmpdata(const bmphead_t *bmphead, uint8_t *data, FILE *stream)
 /* print bmp image data */
 void print_bmpdata(const bmphead_t *bmphead, uint8_t *data, int pkng)
 {
-	if (bmphead->dibhead.size != DIBHEAD_SIZE) /* BITMAPINFOEADER */
+	if ((bmphead == NULL) || (data == NULL) ||
+		(bmphead->dibhead.size != DIBHEAD_SIZE))
 		return;
-	uint32_t cols, dsize;
-	cols = bmphead->dibhead.height;
+	uint32_t dsize, cols = bmphead->dibhead.height;
 
 	/* calculate row data size in bytes without padding */
 	dsize = bmphead->dibhead.bpp * bmphead->dibhead.width / 8;
