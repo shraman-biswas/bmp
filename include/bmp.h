@@ -1,7 +1,6 @@
 #ifndef BMP_H
 #define BMP_H
 
-#include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
@@ -57,7 +56,7 @@ typedef struct __bmphead_t {
 	dibhead_t dibhead;
 } bmphead_t;
 
-inline bool isbmp(const char *filename);
+inline int isbmp(const char *filename);
 inline FILE *bmpopen(const char *path, const char *mode);
 inline void bmpclose(FILE *stream);
 void get_bmphead(uint8_t *b, uint32_t size, bmphead_t *bmphead);

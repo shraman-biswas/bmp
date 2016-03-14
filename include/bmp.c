@@ -1,9 +1,9 @@
 #include "bmp.h"
 
 /* check if filename is a bmp file */
-inline bool isbmp(const char *filename)
+inline int isbmp(const char *filename)
 {
-	return strstr(filename+strlen(filename)-4, ".bmp") ? true : false;
+	return strstr(filename+strlen(filename)-4, ".bmp") ? 1 : 0;
 }
 
 /* open bmp file */
