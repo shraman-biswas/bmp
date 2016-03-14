@@ -5,9 +5,9 @@ int main(int argc, char **argv)
 	printf("[ read bmp header ]\n");
 
 	char *filename, path[PATH_LEN] = "../../images/";
-	uint8_t raw[BYTES]={0};
+	uint8_t raw[BYTES];
 	size_t len;
-	FILE *fp;
+	FILE *fp=NULL;
 	bmphead_t bmphead;
 
 	/* get image filename */
