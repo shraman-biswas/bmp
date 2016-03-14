@@ -1,4 +1,4 @@
-Read BMP header
+Read BMP Data
 ===============
 
-Reads and prints the bmp file header of a specified bmp file.
+Reads and prints the bmp file data of a specified bmp file.
