@@ -25,16 +25,26 @@ int main(int argc, char **argv)
 	}
 	strncat(path, filename, len);
 
-	/* bmp file handling */
-	fp = bmpopen(path, "rb");				/* open bmp file */
-	if (fread(raw, 1, BYTES, fp) == EOF) {	/* read raw data */
+	/* open bmp file */
+	fp = bmpopen(path, "rb");
+
+	/* read raw data */
+	if (fread(raw, 1, BYTES, fp) == EOF) {
 		fprintf(stderr, "bmp file header bytes not be read!\n");
 		exit(EXIT_FAILURE);
 	}
-	get_bmphead(raw, BYTES, &bmphead);		/* parse bmp file header */
-	get_bmpdata(&bmphead, data, fp);		/* read bmp data */
-	print_bmpdata(&bmphead, data, PKNG);	/* print bmp data */
-	bmpclose(fp);							/* close bmp file */
+
+	/* parse bmp file header */
+	get_bmphead(raw, BYTES, &bmphead);
+
+	/* read bmp data */
+	get_bmpdata(&bmphead, data, fp);
+
+	/* print bmp data */
+	print_bmpdata(&bmphead, data, PKNG);
+
+	/* close bmp file */
+	bmpclose(fp);
 
 	return EXIT_SUCCESS;
 }
