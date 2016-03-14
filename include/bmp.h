@@ -67,5 +67,6 @@ void print_bmphead(const bmphead_t *bmphead);
 void print_bitmaphead(const bitmaphead_t *bitmaphead);
 void print_dibhead(const dibhead_t *dibhead);
 void get_bmpdata(const bmphead_t *bmphead, uint8_t *data, FILE *stream);
+void print_bmpdata(const bmphead_t *bmphead, uint8_t *data, int pkng);
 
 #endif

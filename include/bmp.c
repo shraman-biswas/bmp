@@ -102,3 +102,17 @@ void get_bmpdata(const bmphead_t *bmphead, uint8_t *data, FILE *stream)
 	while ((fread(data, 1, dsize, stream) != EOF) && (cols--))
 		data += dsize;
 }
+
+void print_bmpdata(const bmphead_t *bmphead, uint8_t *data, int pkng)
+{
+	if (bmphead->dibhead.size != DIBHEAD_SZ) // BITMAPINFOEADER
+		return;
+	uint32_t dsize, cols;
+	dsize = bmphead->dibhead.bpp * bmphead->dibhead.width / 8;
+	cols = bmphead->dibhead.height;
+	pkng = (pkng > 0) ? pkng : bmphead->dibhead.width;
+	while (cols--) {
+		printb(data, dsize, pkng);
+		data += dsize;
+	}
+}
