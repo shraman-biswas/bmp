@@ -41,28 +41,29 @@
 typedef struct __bitmaphead_t {
 	uint32_t fsize, offset;
 	uint8_t id[2];
-} _bitmaphead_t;
+} bitmaphead_t;
 
 /* DIB header structure */
 typedef struct __dibhead_t {
 	uint32_t size, width, height, comp, isize, xres, yres, nclr, impclr;
 	uint16_t clrpl, bpp;
-} _dibhead_t;
+} dibhead_t;
 
 /* bmp file header structure */
 typedef struct __bmphead_t {
-	_bitmaphead_t bitmaphead;
-	_dibhead_t dibhead;
-} _bmphead_t;
+	bitmaphead_t bitmaphead;
+	dibhead_t dibhead;
+} bmphead_t;
 
 inline bool isbmp(const char *filename);
 inline FILE *bmpopen(const char *path, const char *mode);
 inline void bmpclose(FILE *stream);
-void get_bmphead(uint8_t *b, uint32_t size, _bmphead_t *bmphead);
-void get_bitmaphead(uint8_t *b, uint32_t size, _bitmaphead_t *bitmaphead);
-void get_dibhead(uint8_t *b, uint32_t size, _dibhead_t *dibhead);
-void print_bmphead(const _bmphead_t *bmphead);
-void print_bitmaphead(const _bitmaphead_t *bitmaphead);
-void print_dibhead(const _dibhead_t *dibhead);
+void get_bmphead(uint8_t *b, uint32_t size, bmphead_t *bmphead);
+void get_bitmaphead(uint8_t *b, uint32_t size, bitmaphead_t *bitmaphead);
+void get_dibhead(uint8_t *b, uint32_t size, dibhead_t *dibhead);
+void print_bmphead(const bmphead_t *bmphead);
+void print_bitmaphead(const bitmaphead_t *bitmaphead);
+void print_dibhead(const dibhead_t *dibhead);
+void get_bmpdata(const bmphead_t *bmphead, uint8_t *data);
 
 #endif

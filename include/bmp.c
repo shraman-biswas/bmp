@@ -20,7 +20,7 @@ inline void bmpclose(FILE *stream)
 }
 
 /* get bmp file header data */
-void get_bmphead(uint8_t *b, uint32_t size, _bmphead_t *bmphead)
+void get_bmphead(uint8_t *b, uint32_t size, bmphead_t *bmphead)
 {
 	if ((size < BITMAPHEAD_SZ) || (!bmphead))        /* BITMAPINFOHEADER */
 		 return;
@@ -30,7 +30,7 @@ void get_bmphead(uint8_t *b, uint32_t size, _bmphead_t *bmphead)
 }
 
 /* get bmp file bitmap header data */
-void get_bitmaphead(uint8_t *b, uint32_t size, _bitmaphead_t *bitmaphead)
+void get_bitmaphead(uint8_t *b, uint32_t size, bitmaphead_t *bitmaphead)
 {
 	bitmaphead->id[0] = *(b + BMP_ID0);
 	bitmaphead->id[1] = *(b + BMP_ID1);
@@ -39,7 +39,7 @@ void get_bitmaphead(uint8_t *b, uint32_t size, _bitmaphead_t *bitmaphead)
 }
 
 /* get bmp file DIB header data  */
-void get_dibhead(uint8_t *b, uint32_t size, _dibhead_t *dibhead)
+void get_dibhead(uint8_t *b, uint32_t size, dibhead_t *dibhead)
 {
 	dibhead->size = PACK4(b + BMP_SIZE);
 	if ((dibhead->size != DIBHEAD_SZ) && (size < (BITMAPHEAD_SZ + DIBHEAD_SZ))) /* BITMAPINFOEADER */
@@ -57,7 +57,7 @@ void get_dibhead(uint8_t *b, uint32_t size, _dibhead_t *dibhead)
 }
 
 /* print bmp file header data */
-void print_bmphead(const _bmphead_t *bmphead)
+void print_bmphead(const bmphead_t *bmphead)
 {
 	if (!bmphead)
 		return;
@@ -66,7 +66,7 @@ void print_bmphead(const _bmphead_t *bmphead)
 }
 
 /* print bmp file bitmap header data */
-void print_bitmaphead(const _bitmaphead_t *bitmaphead)
+void print_bitmaphead(const bitmaphead_t *bitmaphead)
 {
 	printf("id:\t\t%c%c\n", bitmaphead->id[0], bitmaphead->id[1]);
 	printf("file size:\t%d bytes\n", bitmaphead->fsize);
@@ -74,7 +74,7 @@ void print_bitmaphead(const _bitmaphead_t *bitmaphead)
 }
 
 /* print bmp file DIB header data */
-void print_dibhead(const _dibhead_t *dibhead)
+void print_dibhead(const dibhead_t *dibhead)
 {
 	printf("dib head size:\t%d bytes\n", dibhead->size);
 	if (dibhead->size != DIBHEAD_SZ) /* BITMAPINFOEADER */
@@ -89,4 +89,9 @@ void print_dibhead(const _dibhead_t *dibhead)
 	printf("Y resolution:\t%d ppm\n", dibhead->yres);
 	printf("colours:\t%d\n", dibhead->nclr);
 	printf("imp. colours:\t%d\n", dibhead->impclr);
+}
+
+void get_bmpdata(const bmphead_t *bmphead, uint8_t *data)
+{
+
 }
