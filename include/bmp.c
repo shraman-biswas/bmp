@@ -100,28 +100,42 @@ void print_dibhead(const dibhead_t *dibhead)
 	printf("imp. colours:\t%d\n", dibhead->impclr);
 }
 
+/* get bmp image data */
 void get_bmpdata(const bmphead_t *bmphead, uint8_t *data, FILE *stream)
 {
 	if (bmphead->dibhead.size != DIBHEAD_SIZE) /* BITMAPINFOEADER */
 		return;
-	uint32_t dsize, cols;
-	dsize = bmphead->dibhead.bpp * bmphead->dibhead.width / 8;
+	uint32_t cols, dsize;
 	cols = bmphead->dibhead.height;
+
+	/* calculate row data size in bytes without padding */
+	dsize = bmphead->dibhead.bpp * bmphead->dibhead.width / 8;
+
+	/* set input stream pointer to image data start offset */
 	fseek(stream, bmphead->bitmaphead.offset, SEEK_SET);
+
+	/* set output data buffer size to last row */
 	data += dsize * (cols - 1);
+
 	while ((fread(data, 1, dsize, stream) != EOF) && (cols--))
 		data -= dsize;
 }
 
+/* print bmp image data */
 void print_bmpdata(const bmphead_t *bmphead, uint8_t *data, int pkng)
 {
 	if (bmphead->dibhead.size != DIBHEAD_SIZE) /* BITMAPINFOEADER */
 		return;
-	uint32_t dsize, cols;
-	dsize = bmphead->dibhead.bpp * bmphead->dibhead.width / 8;
+	uint32_t cols, dsize;
 	cols = bmphead->dibhead.height;
+
+	/* calculate row data size in bytes without padding */
+	dsize = bmphead->dibhead.bpp * bmphead->dibhead.width / 8;
+
+	/* set pkng to row width in bytes */
 	if (pkng <= 0)
-		pkng = bmphead->dibhead.width;
+		pkng = dsize;
+
 	while (cols--) {
 		printb(data, dsize, pkng);
 		data += dsize;
