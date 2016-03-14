@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "bytes.h"
+
 /* bitmap header size */
 #define BITMAPHEAD_SZ	14
 
@@ -64,6 +66,6 @@ void get_dibhead(uint8_t *b, uint32_t size, dibhead_t *dibhead);
 void print_bmphead(const bmphead_t *bmphead);
 void print_bitmaphead(const bitmaphead_t *bitmaphead);
 void print_dibhead(const dibhead_t *dibhead);
-void get_bmpdata(const bmphead_t *bmphead, uint8_t *data);
+void get_bmpdata(const bmphead_t *bmphead, uint8_t *data, FILE *stream);
 
 #endif

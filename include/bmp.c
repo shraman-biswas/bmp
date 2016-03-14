@@ -91,7 +91,16 @@ void print_dibhead(const dibhead_t *dibhead)
 	printf("imp. colours:\t%d\n", dibhead->impclr);
 }
 
-void get_bmpdata(const bmphead_t *bmphead, uint8_t *data)
+void get_bmpdata(const bmphead_t *bmphead, uint8_t *data, FILE *stream)
 {
-
+	if (bmphead->dibhead.size != DIBHEAD_SZ) // BITMAPINFOEADER
+		return;
+	uint32_t dsize, cnt;
+	dsize = bmphead->dibhead.bpp * bmphead->dibhead.width / 8;
+	cnt = bmphead->dibhead.height;
+	fseek(stream, bmphead->bitmaphead.offset, SEEK_SET);
+	while (cnt--) {
+		fgetb(data, dsize, stream);
+		data += dsize;
+	}
 }

@@ -5,10 +5,10 @@ int main(int argc, char **argv)
 	printf("[ read bmp data ]\n");
 
 	char *filename, path[PATH_LEN] = "../../images/";
-	uint8_t raw[BYTES]={0};
+	uint8_t raw[BYTES]={0}, data[480][3*640];
 	size_t len;
 	FILE *fp;
-	_bmphead_t bmphead;
+	bmphead_t bmphead;
 
 	/* get image filename */
 	filename = (argc > 1) ? argv[1] : "test.bmp";
@@ -25,19 +25,11 @@ int main(int argc, char **argv)
 	}
 	strncat(path, filename, len);
 
-	/* open bmp file */
-	fp = bmpopen(path, "rb");
-
-	/* read raw data */
-	fgetb(raw, BYTES, fp);
-
-	/* parse bmp file header */
-	get_bmphead(raw, BYTES, &bmphead);
-
-	/* read bmp data */
-
-	/* close bmp file */
-	bmpclose(fp);
+	fp = bmpopen(path, "rb"); /* open bmp file */
+	fgetb(raw, BYTES, fp); /* read raw data */
+	get_bmphead(raw, BYTES, &bmphead); /* parse bmp file header */
+	get_bmpdata(&bmphead, data, fp); /* read bmp data */
+	bmpclose(fp); /* close bmp file */
 
 	return EXIT_SUCCESS;
 }
