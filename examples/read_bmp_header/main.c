@@ -29,7 +29,7 @@ int main(int argc, char **argv)
 	fp = bmpopen(path, "rb");
 
 	/* read raw data */
-	fgetb(raw, BYTES, fp);
+	fread(raw, 1, BYTES, fp);
 	printf("raw data:\n");
 	printb(raw, BYTES, PKNG);
 
