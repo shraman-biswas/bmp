@@ -95,12 +95,10 @@ void get_bmpdata(const bmphead_t *bmphead, uint8_t *data, FILE *stream)
 {
 	if (bmphead->dibhead.size != DIBHEAD_SZ) // BITMAPINFOEADER
 		return;
-	uint32_t dsize, cnt;
+	uint32_t dsize, cols;
 	dsize = bmphead->dibhead.bpp * bmphead->dibhead.width / 8;
-	cnt = bmphead->dibhead.height;
+	cols = bmphead->dibhead.height;
 	fseek(stream, bmphead->bitmaphead.offset, SEEK_SET);
-	while (cnt--) {
-		fgetb(data, dsize, stream);
+	while ((fread(data, 1, dsize, stream) != EOF) && (cols--))
 		data += dsize;
-	}
 }
